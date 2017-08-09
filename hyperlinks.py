@@ -1,5 +1,5 @@
 import urllib2
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 import re
 import json
 import sys
@@ -14,8 +14,8 @@ def obtain_json():
 
     count=0
 
-    max_limit = sys.argv[4]
-    initial_url = str(sys.argv[2])    
+    max_limit = 10
+    initial_url = "http://www.baidu.com"  
 
     populate_list(initial_url)
 
@@ -54,7 +54,7 @@ def populate_list(url):
 def read():
 
     with open(dump_file) as file:
-       result = load(file)
+       result = json.load(file)
     file.close()
     print (type(result))
     print (result.keys())
@@ -67,11 +67,11 @@ def main():
     global list_url
     global dump_file
 
-    dump_file = str(sys.argv[6])    
+    dump_file =    "/home/hugh/Desktop/axc.txt"
 
     obtain_json()
     read()
     
     
 if __name__ == '__main__':
-  main() 
+  main()
