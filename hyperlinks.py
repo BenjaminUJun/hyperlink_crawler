@@ -1,4 +1,6 @@
 import urllib2
+import urllib
+import cookielib
 from bs4 import BeautifulSoup
 import re
 import json
@@ -9,13 +11,12 @@ total = 0
 list_url=[]
 dump_file=''
 
-
 def obtain_json():
 
     count=0
 
-    max_limit = 10
-    initial_url = "http://www.baidu.com"  
+    max_limit = 1000
+    initial_url = "http://www.zhihu.com/"  
 
     populate_list(initial_url)
 
@@ -71,7 +72,17 @@ def main():
 
     obtain_json()
     read()
+
+def login(url, data):
+    req = urllib2.Request(url)
+    data = urllib.urlencode(data)
+    #enable cookie
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+    response = opener.open(req, data).read()
     
     
 if __name__ == '__main__':
+  posturl = "http://www.zhihu.com/"
+  data = { 'username':'', 'password':'' }
+  login(posturl, data)
   main()
