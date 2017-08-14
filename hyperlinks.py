@@ -12,10 +12,10 @@ list_url=[]
 dump_file=''
 
 def obtain_json():
-
+  
     count=0
 
-    max_limit = 1000
+    max_limit = 10
     initial_url = "http://www.zhihu.com/"  
 
     populate_list(initial_url)
@@ -23,16 +23,19 @@ def obtain_json():
     while len(list_url) < max_limit:
       populate_list(list_url[count])
       count+=1
-                     
+
+    f1 = open(dump_file, 'w')        
+    for element in list_url:  
+      f1.write(element)
+      f1.write('\n')
+    f1.close()               
 
 def populate_list(url):
     
     try:    
     
       global list_url
-      global dump_file
     
-
       page = urllib2.urlopen(url)
       soup = BeautifulSoup(page)
 
@@ -42,36 +45,17 @@ def populate_list(url):
               list_url.append(str(incident['href']))
         except UnicodeEncodeError:
                print ''
- 
-      with open(dump_file, "w") as file:
-        json.dump( {'url':url,'outgoing':list_url}, file, indent=4)
-      file.close()
-
     except:
         print ''  
-
-
-
-def read():
-
-    with open(dump_file) as file:
-       result = json.load(file)
-    file.close()
-    print (type(result))
-    print (result.keys())
-    print (result)
-        
-
 
 def main():
     
     global list_url
     global dump_file
 
-    dump_file =    "/home/hugh/Desktop/axc.txt"
+    dump_file =  "urls.txt"
 
     obtain_json()
-    read()
 
 def login(url, data):
     req = urllib2.Request(url)
