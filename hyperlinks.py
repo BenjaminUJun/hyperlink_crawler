@@ -8,23 +8,30 @@ import sys
 import json
 
 total = 0
-list_url=[]
-dump_file=''
-
+list_url = []
+dump_file =''
+HOME_DIR = ''
 def obtain_json():
-  
+    global dump_file, HOME_DIR
+    HOME_DIR = '/home/hugh/'
     count=0
 
-    max_limit = 10
+    max_limit = 100
     initial_url = "http://www.zhihu.com/"  
 
     populate_list(initial_url)
 
     while len(list_url) < max_limit:
       populate_list(list_url[count])
-      count+=1
+      count += 1
 
-    f1 = open(dump_file, 'w')        
+    proto, rest = urllib.splittype(initial_url)
+    res, rest = urllib.splithost(rest)
+    if res:
+      dump_file = res
+    else:
+      dump_file = 'urls.txt'  
+    f1 = open(HOME_DIR + dump_file, 'w')        
     for element in list_url:  
       f1.write(element)
       f1.write('\n')
@@ -51,9 +58,6 @@ def populate_list(url):
 def main():
     
     global list_url
-    global dump_file
-
-    dump_file =  "urls.txt"
 
     obtain_json()
 
@@ -63,7 +67,6 @@ def login(url, data):
     #enable cookie
     opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
     response = opener.open(req, data).read()
-    
     
 if __name__ == '__main__':
   posturl = "http://www.zhihu.com/"
