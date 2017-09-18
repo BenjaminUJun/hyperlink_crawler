@@ -1,0 +1,6 @@
+var r="20110213".replace(/^(\d{4})(\d{2})(\d{2})$/, "$1/$2/$3")
+console.log(r)
+var dateString = '19930701';
+var pattern = /(\d{4})(\d{2})(\d{2})/;
+var formatedDate = dateString.replace(pattern, '$1-$2-$3');
+console.log(formatedDate);
