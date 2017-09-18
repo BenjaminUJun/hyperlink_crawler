@@ -4,3 +4,12 @@ var dateString = '19930701';
 var pattern = /(\d{4})(\d{2})(\d{2})/;
 var formatedDate = dateString.replace(pattern, '$1-$2-$3');
 console.log(formatedDate);
+function formatStringyyyyMMddToyyyy_MM_dd (value){
+  if(value.length == 8){
+      return value.substring(0, 4) + "-" + value.substring(4, 6) + "-" + value.substring(6, 8);
+  } else if(value.length == 6){
+      return value.substring(0, 4) + "-" + value.substring(4, 6);
+  } else {
+      return value;
+  }
+}
